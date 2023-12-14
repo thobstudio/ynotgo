@@ -1,15 +1,18 @@
 package utils
 
 type ID struct {
-	client uint32
-	clock  uint32
+	client uint
+	clock  uint
 }
 
-func NewID(client uint32, clock uint32) *ID {
+func newID(client uint, clock uint) *ID {
 	return &ID{
 		client: client,
 		clock:  clock,
 	}
+}
+func NewID(client uint, clock uint) *ID {
+	return newID(client, clock)
 }
 
 func (id *ID) CompareID(other *ID) bool {
