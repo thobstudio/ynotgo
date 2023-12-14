@@ -41,3 +41,16 @@ func TestEncoding(t *testing.T) {
 		}
 	}
 }
+
+func TestVarUint(t *testing.T) {
+	scenarios := []uint{42, 1<<9 | 3, 1<<17 | 1<<9 | 3, 1<<25 | 1<<17 | 1<<9 | 3, 2839012934}
+	for _, scenario := range scenarios {
+		encoder := NewEncoder()
+		encoder.WriteVarUint(uint(scenario))
+		buffer := encoder.ToUint8Array()
+		decoder := NewDecoder(buffer)
+		result, err := decoder.ReadVarUint()
+		assert.Nil(t, err)
+		assert.Equal(t, scenario, result)
+	}
+}
